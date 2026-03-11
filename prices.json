@@ -1,0 +1,52 @@
+{
+  "configurations": [
+    {
+      "model_name": "GPT-4o (The Heavyweight)",
+      "provider": "OpenAI",
+      "hardware": "H100 SXM",
+      "quality": 5,
+      "task_scores": {"Summarization": 9, "Coding": 10, "Extraction": 9, "Creative": 9},
+      "billing_type": "token",
+      "input_price": 5.00,
+      "output_price": 15.00,
+      "parameters_billions": 175.0,
+      "quantization_bits": 8
+    },
+    {
+      "model_name": "Claude 3.5 Sonnet (The Efficient King)",
+      "provider": "Anthropic",
+      "hardware": "TPU v6e",
+      "quality": 5,
+      "task_scores": {"Summarization": 9, "Coding": 9, "Extraction": 10, "Creative": 10},
+      "billing_type": "token",
+      "input_price": 3.00,
+      "output_price": 9.00,
+      "parameters_billions": 175.0,
+      "quantization_bits": 4
+    },
+    {
+      "model_name": "Llama 3.1 8B (The Speedster)",
+      "provider": "Meta",
+      "hardware": "H100 SXM",
+      "quality": 2,
+      "task_scores": {"Summarization": 8, "Coding": 2, "Extraction": 8, "Creative": 4},
+      "billing_type": "token",
+      "input_price": 0.05,
+      "output_price": 0.10,
+      "parameters_billions": 8.0,
+      "quantization_bits": 4
+    },
+    {
+      "model_name": "Legacy-X (The Legacy Trap)",
+      "provider": "Internal",
+      "hardware": "Shared",
+      "quality": 3,
+      "task_scores": {"Summarization": 6, "Coding": 4, "Extraction": 6, "Creative": 5},
+      "billing_type": "token",
+      "input_price": 15.00,
+      "output_price": 45.00,
+      "parameters_billions": 70.0,
+      "quantization_bits": 16
+    }
+  ]
+}
