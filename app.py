@@ -4,40 +4,62 @@ import plotly.express as px
 import json
 from engine import InferenceConfig, get_pareto_frontier
 
-st.set_page_config(page_title="Task-Tethered Tradeoff Tool", layout="wide")
+# --- 1. INITIALIZATION: Must be the very first Streamlit call ---
+st.set_page_config(
+    page_title="Task-Tethered Tradeoff Tool", 
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
+# --- 2. THEME-AWARE STYLING ---
+# We keep only the structural CSS (spacing/borders) and let Streamlit 
+# handle the colors. This prevents the "white-out" on mobile.
 st.markdown("""
     <style>
-    .main { background-color: #f8f9fa; }
-    .intro-box { background-color: #ffffff; padding: 30px; border-radius: 12px; border: 2px solid #dee2e6; margin-bottom: 35px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-    .executive-report { background-color: #ffffff; padding: 30px; border-radius: 12px; border: 2px solid #e9ecef; color: #1a1c24 !important; margin-bottom: 25px; }
-    .profile-badge { background-color: #FFD700; color: #000; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
-    .cfo-banner { border-left: 10px solid #dc3545; }
-    .tradeoff-banner { border-left: 10px solid #ffc107; }
-    .priority-container { background-color: #ffffff; padding: 25px; border-radius: 12px; border: 1px solid #e9ecef; margin-bottom: 30px; }
+    .main { background-color: transparent; }
+    .priority-container { 
+        padding: 25px; 
+        border-radius: 12px; 
+        border: 1px solid rgba(151, 151, 151, 0.2); 
+        margin-bottom: 30px; 
+    }
+    /* Simple utility for the report sections later */
+    .cfo-banner { border-left: 10px solid #dc3545; padding-left: 20px; }
+    .tradeoff-banner { border-left: 10px solid #ffc107; padding-left: 20px; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- TOP OF PAGE: STRATEGIC OVERVIEW ---
-st.title("🚀 AI Model-Decision-Tradeoff Tool (Task-Tethered)")
+# --- 3. TOP OF PAGE: STRATEGIC OVERVIEW (Native Version) ---
+st.title("🚀 AI Model-Decision-Tradeoff Tool")
 
+# Using st.info ensures perfect background/text contrast on all devices
+st.info("""
+**Strategic Purpose:** This tool tethers model performance to your **actual workload**. 
+Instead of generic "Intelligence," it calculates model fitness based on your 
+specific mix of tasks (Coding, Summarization, etc.).
+""")
+
+# Use a native container for the guide to maintain clean spacing
 with st.container():
-    st.markdown("""
-    <div class="intro-box">
-        <h3>Strategic Purpose</h3>
-        <p>This version of the tool tethers model performance to your <b>actual workload</b>. Instead of generic "Intelligence," it calculates model fitness based on your specific mix of tasks (Coding, Summarization, etc.).</p>
-        <hr>
-        <h4>Operational Guide:</h4>
-        <p><b>Step 1: Inventory Your Workload Mix</b><br>
-        Define the percentage of your AI traffic dedicated to specific tasks. This creates a "Capability Requirement" for the models.</p>
-        <p><b>Step 2: Map Usage & Identify Task-Gaps</b><br>
-        Upload your 'Actuals' CSV. The maps will reveal if you are using an "overqualified" model (paying for logic you don't use) or an "underqualified" one.</p>
-        <p><b>Step 3: Analyze Portfolio Tradeoffs</b><br>
-        Observe the <b>"Inflexibility Tax"</b>—the cost of using a single heavyweight model for a workload dominated by simple tasks.</p>
-        <p><b>Step 4: Execute Deployment Sign-off</b><br>
-        Select the target model that best fits your task profile and document the rationale.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.subheader("Operational Guide")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        **Step 1: Inventory Your Workload Mix** Define the percentage of your AI traffic dedicated to specific tasks. This creates a "Capability Requirement" for the models.
+        
+        **Step 2: Map Usage & Identify Task-Gaps** Upload your 'Actuals' CSV. The maps will reveal if you are using an "overqualified" model or an "underqualified" one.
+        """)
+        
+    with col2:
+        st.markdown("""
+        **Step 3: Analyze Portfolio Tradeoffs** Observe the **"Inflexibility Tax"**—the cost of using a single heavyweight model for a workload dominated by simple tasks.
+        
+        **Step 4: Execute Deployment Sign-off** Select the target model that best fits your task profile and document the rationale.
+        """)
+
+st.divider()
 
 # --- STEP 1: WORKLOAD INVENTORY ---
 st.header("🛡️ 1️⃣ Define Your Strategic Workload Mix")
